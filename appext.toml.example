@@ -1,0 +1,5 @@
+# Copy to appext.toml and fill with YOUR platform's addresses (ask the platform operator).
+[platform]
+name = "Your Platform"
+issuer = "https://auth.example.org/realms/example"
+store_url = "https://api.example.org/api/v1"

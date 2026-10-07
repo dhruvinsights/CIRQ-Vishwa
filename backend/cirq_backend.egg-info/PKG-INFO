@@ -1,0 +1,22 @@
+Metadata-Version: 2.4
+Name: cirq-backend
+Version: 0.2.0
+Summary: CIRQ backend: AgriFoodData Application SDK extension + Db2 RAG
+Requires-Python: >=3.12
+Requires-Dist: fastapi>=0.115
+Requires-Dist: uvicorn[standard]>=0.30
+Requires-Dist: httpx>=0.27
+Requires-Dist: pydantic>=2.7
+Requires-Dist: pydantic-settings>=2.3
+Requires-Dist: langchain-core>=0.3
+Requires-Dist: langchain-text-splitters>=0.3
+Requires-Dist: langchain-db2
+Requires-Dist: langchain-google-genai
+Requires-Dist: pypdf>=5.0
+Provides-Extra: appext
+Requires-Dist: appext @ git+https://github.com/NaLamKI/Application-SDK.git ; extra == "appext"
+Provides-Extra: watsonx
+Requires-Dist: langchain-ibm; extra == "watsonx"
+Provides-Extra: test
+Requires-Dist: pytest>=8; extra == "test"
+Requires-Dist: pytest-asyncio>=0.23; extra == "test"

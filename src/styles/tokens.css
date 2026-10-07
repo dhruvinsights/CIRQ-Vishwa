@@ -1,0 +1,81 @@
+:root {
+  /* Core Brand Tokens */
+  --bg: #121317;
+  --accent: #E0FF20;
+  --accent-2: #FFFF00;
+  --olive: #6B8547;
+  --warm: #EF8B44;
+
+  /* Neutral Surface Tints derived from #121317 */
+  --bg-canvas: #121317;
+  --bg-subtle: #15171D;
+  --surface: #181A20;
+  --bg-surface: #181A20;
+  --surface-raised: #1E2129;
+  --bg-surface-elevated: #1E2129;
+  --surface-highlight: #242832;
+  --bg-surface-highlight: #242832;
+
+  /* Low contrast 1px borders */
+  --border-subtle: #1F232B;
+  --border: #262B35;
+  --border-strong: #333946;
+  --border-focus: #E0FF20;
+
+  /* Text Levels */
+  --text-primary: #FFFFFF;
+  --text-secondary: #9EAAA5;
+  --text-muted: #68756F;
+  --text-on-accent: #121317;
+
+  /* Primary & Functional aliases */
+  --color-primary: #E0FF20;
+  --color-primary-hover: #EEFF52;
+  --color-primary-muted: #6B8547;
+  --color-primary-dim: rgba(224, 255, 32, 0.12);
+  --color-secondary: #FFFF00;
+  --color-olive: #6B8547;
+  --color-olive-dim: rgba(107, 133, 71, 0.18);
+  --color-warm: #EF8B44;
+  --color-warm-dim: rgba(239, 139, 68, 0.16);
+  --color-error: #DC2626;
+
+  /* Radii conforming to premium 12-16px */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.012em;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tabular numerals standard for financial, mass and coordinate meters */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}

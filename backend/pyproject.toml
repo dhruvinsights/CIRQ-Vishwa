@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = []
+
+[project]
+name = "cirq-backend"
+version = "0.2.0"
+description = "CIRQ backend: AgriFoodData Application SDK extension + Db2 RAG"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "httpx>=0.27",
+  "pydantic>=2.7",
+  "pydantic-settings>=2.3",
+  "langchain-core>=0.3",
+  "langchain-text-splitters>=0.3",
+  "langchain-db2",              # DB2VS vector store (needs Db2 >= 12.1.2)
+  "langchain-google-genai",     # Google Gemini provider
+  "langchain-ollama>=1.0.0",    # Ollama provider for local / on-prem models
+  "pypdf>=5.0",
+]
+
+[project.optional-dependencies]
+# The SDK is 0.1.0 and "not yet released" per the docs; install from the repo until it is on PyPI.
+appext   = ["appext @ git+https://github.com/NaLamKI/Application-SDK.git"]
+watsonx  = ["langchain-ibm"]
+test     = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

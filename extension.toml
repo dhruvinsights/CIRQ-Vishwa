@@ -1,0 +1,22 @@
+# Application SDK manifest. No secrets here (SDK rule). Validate with: appext manifest check
+[extension]
+id = "cirq"
+name = "CIRQ - Circular Agri-Food Intelligence"
+description = "Pathway discovery, matching and logistics for agricultural residues"
+version = "0.2.0"
+entry = "/"
+icon = "icon.svg"
+dev_port = 8100
+display = "in_app"
+# Hosts the page may load images/fonts from (widens img-src / font-src ONLY, https only).
+# Map tiles also need connect-src, which this key does NOT widen - see docs/MANUAL_STEPS.md (CSP).
+hosts = []
+
+[consent]
+scopes = ["cirq-use"]            # REPLACE with a scope your platform's service catalog really offers
+
+[[services]]
+name = "farm"
+audience = "farm-api"            # REPLACE: run `appext store services` for the real audience
+scopes = ["farm-read"]           # REPLACE likewise
+mode = "user"

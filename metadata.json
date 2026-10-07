@@ -1,0 +1,6 @@
+{
+  "name": "CIRQ — Circular Agri-Food Intelligence",
+  "description": "AI-enabled platform for circular bioeconomy, resource recovery, pathway discovery, and logistics optimization across global agri-food systems.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

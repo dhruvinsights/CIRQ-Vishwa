@@ -1,0 +1,424 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "title": "CIRQ Operational Agriculture & Biomass GeoJSON",
+    "projection": "EPSG:4326 (WGS84)",
+    "satelliteMission": "Copernicus Sentinel-2B Multi-Spectral Instrument (MSI)",
+    "processingLevel": "Level-2A Bottom-Of-Atmosphere Surface Reflectance",
+    "cloudCoverPercent": 0.12,
+    "spatialResolutionMeters": 10,
+    "acquisitionDate": "2026-10-06T14:45:00Z",
+    "updatedAt": "2026-10-06T15:00:00Z",
+    "totalParcels": 6,
+    "totalAcreage": 1107,
+    "activeAcreage": 1100,
+    "fallowAcreage": 7,
+    "avgNdvi": 0.83,
+    "totalFieldsCount": 321,
+    "centralCoordinates": {
+      "latitude": 38.7615,
+      "longitude": -121.7100,
+      "dms": "38°45'57.2\"N 121°42'41.3\"W"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "field-a",
+      "properties": {
+        "name": "Area-1 / Field-A",
+        "cropType": "Boro Rice (HYV)",
+        "variety": "Pari High-Yield Rice",
+        "acreage": 248,
+        "hectares": 100.4,
+        "areaM2": 1003600,
+        "ndvi": 0.91,
+        "soilMoisturePercent": 81,
+        "biomassResidueTons": 480.0,
+        "residueType": "Rice Straw Stubble",
+        "healthStatus": "EXCELLENT",
+        "pestStatus": "Pest Free",
+        "plantingDate": "2026-03-26",
+        "harvestWindow": "2026-10-15 - 2026-11-20",
+        "growthStage": "Booting & Panicle",
+        "stageDays": "82 / 125 days",
+        "stagePercent": 65,
+        "productionCostUsd": 1099,
+        "expectedRevenueUsd": 2099,
+        "biocharPotentialTons": 168.0,
+        "co2eOffsetTons": 710.4,
+        "organicCarbonPercent": 2.4,
+        "targetProcessorId": "proc-slow-pyrolysis-up",
+        "color": "#E0FF20",
+        "fillOpacity": 0.35,
+        "strokeColor": "#E0FF20"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-121.7180, 38.7620],
+            [-121.7100, 38.7620],
+            [-121.7100, 38.7695],
+            [-121.7180, 38.7695],
+            [-121.7180, 38.7620]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "field-b",
+      "properties": {
+        "name": "Area-2 / Field-B",
+        "cropType": "Winter Wheat Grain",
+        "variety": "Hard Red Winter",
+        "acreage": 185,
+        "hectares": 74.9,
+        "areaM2": 748670,
+        "ndvi": 0.84,
+        "soilMoisturePercent": 68,
+        "biomassResidueTons": 320.0,
+        "residueType": "Wheat Straw Biomass",
+        "healthStatus": "GOOD",
+        "pestStatus": "Controlled",
+        "plantingDate": "2026-02-14",
+        "harvestWindow": "2026-09-01 - 2026-10-30",
+        "growthStage": "Ripening Phase",
+        "stageDays": "110 / 130 days",
+        "stagePercent": 85,
+        "productionCostUsd": 850,
+        "expectedRevenueUsd": 1720,
+        "biocharPotentialTons": 112.0,
+        "co2eOffsetTons": 473.6,
+        "organicCarbonPercent": 1.9,
+        "targetProcessorId": "proc-gasification-chp",
+        "color": "#6B8547",
+        "fillOpacity": 0.30,
+        "strokeColor": "#6B8547"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-121.7080, 38.7625],
+            [-121.7010, 38.7625],
+            [-121.7010, 38.7690],
+            [-121.7080, 38.7690],
+            [-121.7080, 38.7625]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "field-c",
+      "properties": {
+        "name": "Area-3 / Field-C",
+        "cropType": "Sugarcane Bio-Cane",
+        "variety": "SP80-3280 Elite",
+        "acreage": 310,
+        "hectares": 125.5,
+        "areaM2": 1254500,
+        "ndvi": 0.88,
+        "soilMoisturePercent": 74,
+        "biomassResidueTons": 1250.0,
+        "residueType": "Sugarcane Bagasse",
+        "healthStatus": "EXCELLENT",
+        "pestStatus": "Pest Free",
+        "plantingDate": "2025-11-10",
+        "harvestWindow": "2026-05-01 - 2026-11-30",
+        "growthStage": "Maturation & Sugar Storing",
+        "stageDays": "290 / 330 days",
+        "stagePercent": 88,
+        "productionCostUsd": 1420,
+        "expectedRevenueUsd": 3100,
+        "biocharPotentialTons": 387.5,
+        "co2eOffsetTons": 1850.0,
+        "organicCarbonPercent": 2.8,
+        "targetProcessorId": "proc-anaerobic-ad-br",
+        "color": "#E0FF20",
+        "fillOpacity": 0.30,
+        "strokeColor": "#E0FF20"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-121.7260, 38.7530],
+            [-121.7160, 38.7530],
+            [-121.7160, 38.7605],
+            [-121.7260, 38.7605],
+            [-121.7260, 38.7530]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "field-d",
+      "properties": {
+        "name": "Area-4 / Field-D",
+        "cropType": "Maize Corn Grain",
+        "variety": "Yellow Dent Grain",
+        "acreage": 142,
+        "hectares": 57.5,
+        "areaM2": 574650,
+        "ndvi": 0.79,
+        "soilMoisturePercent": 62,
+        "biomassResidueTons": 210.0,
+        "residueType": "Corn Stover",
+        "healthStatus": "MODERATE",
+        "pestStatus": "Monitored",
+        "plantingDate": "2026-04-12",
+        "harvestWindow": "2026-10-01 - 2026-11-15",
+        "growthStage": "Flowering & Silking",
+        "stageDays": "75 / 115 days",
+        "stagePercent": 65,
+        "productionCostUsd": 720,
+        "expectedRevenueUsd": 1490,
+        "biocharPotentialTons": 73.5,
+        "co2eOffsetTons": 310.8,
+        "organicCarbonPercent": 1.7,
+        "targetProcessorId": "proc-pellet-biofuel",
+        "color": "#EF8B44",
+        "fillOpacity": 0.30,
+        "strokeColor": "#EF8B44"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-121.7000, 38.7540],
+            [-121.6920, 38.7540],
+            [-121.6920, 38.7610],
+            [-121.7000, 38.7610],
+            [-121.7000, 38.7540]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "field-e",
+      "properties": {
+        "name": "Area-5 / Field-E",
+        "cropType": "Organic Almond Orchard",
+        "variety": "Nonpareil & Monterey",
+        "acreage": 215,
+        "hectares": 87.0,
+        "areaM2": 870100,
+        "ndvi": 0.86,
+        "soilMoisturePercent": 70,
+        "biomassResidueTons": 390.0,
+        "residueType": "Almond Shells & Prunings",
+        "healthStatus": "EXCELLENT",
+        "pestStatus": "Organic Certified",
+        "plantingDate": "2024-02-10",
+        "harvestWindow": "2026-08-15 - 2026-10-15",
+        "growthStage": "Hull Split & Harvest Post",
+        "stageDays": "180 / 210 days",
+        "stagePercent": 92,
+        "productionCostUsd": 1280,
+        "expectedRevenueUsd": 2780,
+        "biocharPotentialTons": 140.0,
+        "co2eOffsetTons": 580.0,
+        "organicCarbonPercent": 2.2,
+        "targetProcessorId": "proc-slow-pyrolysis-up",
+        "color": "#E0FF20",
+        "fillOpacity": 0.30,
+        "strokeColor": "#E0FF20"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-121.7140, 38.7460],
+            [-121.7030, 38.7460],
+            [-121.7030, 38.7525],
+            [-121.7140, 38.7525],
+            [-121.7140, 38.7460]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "field-fallow",
+      "properties": {
+        "name": "Fallow Buffer / Soil Rest",
+        "cropType": "Cover Crop Legume",
+        "variety": "Crimson Clover Cover",
+        "acreage": 7,
+        "hectares": 2.8,
+        "areaM2": 28320,
+        "ndvi": 0.45,
+        "soilMoisturePercent": 45,
+        "biomassResidueTons": 18.0,
+        "residueType": "Green Manure",
+        "healthStatus": "REGENERATING",
+        "pestStatus": "Beneficial Insect Haven",
+        "plantingDate": "2026-05-01",
+        "harvestWindow": "Soil Incorporation 2026-11-01",
+        "growthStage": "Vegetative Biomass",
+        "stageDays": "158 / 180 days",
+        "stagePercent": 88,
+        "productionCostUsd": 120,
+        "expectedRevenueUsd": 0,
+        "biocharPotentialTons": 4.5,
+        "co2eOffsetTons": 22.0,
+        "organicCarbonPercent": 3.1,
+        "targetProcessorId": "proc-regenerative-soil",
+        "color": "#6B8547",
+        "fillOpacity": 0.20,
+        "strokeColor": "#6B8547"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-121.7130, 38.7585],
+            [-121.7090, 38.7585],
+            [-121.7090, 38.7615],
+            [-121.7130, 38.7615],
+            [-121.7130, 38.7585]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "facility-pyrolysis",
+      "properties": {
+        "name": "Valley Advanced Pyrolysis Facility",
+        "category": "FACILITY",
+        "type": "Slow Pyrolysis & Biochar",
+        "capacityTonsPerDay": 85.0,
+        "availableCapacity": 48.0,
+        "address": "Industrial Sector B, Central Valley Ag-Park",
+        "coordinatesText": "38°46'19.2\"N 121°42'18.0\"W",
+        "certifications": ["EBC Biochar", "Verra VM0044 Carbon Standard"],
+        "status": "OPERATIONAL",
+        "markerType": "PROCESSOR",
+        "color": "#E0FF20"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-121.7050, 38.7720]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "facility-biogas",
+      "properties": {
+        "name": "Bio-Gas & Biomethane Hub",
+        "category": "FACILITY",
+        "type": "CSTR Anaerobic Digestion",
+        "capacityTonsPerDay": 120.0,
+        "availableCapacity": 65.0,
+        "address": "SATAT Renewable Fuel Gate 2",
+        "coordinatesText": "38°44'52.8\"N 121°43'19.2\"W",
+        "certifications": ["ISCC Plus Biofuel", "Renewable Fuel Standard"],
+        "status": "OPERATIONAL",
+        "markerType": "PROCESSOR",
+        "color": "#FFFF00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-121.7220, 38.7480]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "facility-pellet",
+      "properties": {
+        "name": "Central Feed & Biomass Pellet Mill",
+        "category": "FACILITY",
+        "type": "Densification & Pellet Mill",
+        "capacityTonsPerDay": 60.0,
+        "availableCapacity": 34.0,
+        "address": "Agri-Logistics Hub East, Bay 4",
+        "coordinatesText": "38°45'32.4\"N 121°41'38.4\"W",
+        "certifications": ["ISO 17225 Solid Biofuels"],
+        "status": "OPERATIONAL",
+        "markerType": "PROCESSOR",
+        "color": "#6DA8C8"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-121.6940, 38.7590]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "route-field-a-to-pyrolysis",
+      "properties": {
+        "name": "Freight Corridor: Area-1 ➔ Valley Pyrolysis",
+        "category": "LOGISTICS_ROUTE",
+        "distanceKm": 4.8,
+        "haulageTimeMins": 9,
+        "payloadTons": 480.0,
+        "fuelType": "Electric Heavy Truck",
+        "freightCo2Kg": 32.4,
+        "status": "OPTIMIZED",
+        "color": "#E0FF20"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-121.7140, 38.7657],
+          [-121.7140, 38.7695],
+          [-121.7080, 38.7695],
+          [-121.7050, 38.7720]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "route-field-c-to-biogas",
+      "properties": {
+        "name": "Freight Corridor: Area-3 ➔ Biomethane Hub",
+        "category": "LOGISTICS_ROUTE",
+        "distanceKm": 6.2,
+        "haulageTimeMins": 12,
+        "payloadTons": 1250.0,
+        "fuelType": "Compressed Biomethane Fleet",
+        "freightCo2Kg": 54.0,
+        "status": "OPTIMIZED",
+        "color": "#FFFF00"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-121.7210, 38.7565],
+          [-121.7210, 38.7510],
+          [-121.7220, 38.7480]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "route-field-e-to-pellet",
+      "properties": {
+        "name": "Freight Corridor: Area-5 ➔ Pellet Mill",
+        "category": "LOGISTICS_ROUTE",
+        "distanceKm": 3.7,
+        "haulageTimeMins": 7,
+        "payloadTons": 390.0,
+        "fuelType": "Bio-Diesel Hybrid Truck",
+        "freightCo2Kg": 24.8,
+        "status": "OPTIMIZED",
+        "color": "#6DA8C8"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-121.7080, 38.7490],
+          [-121.7010, 38.7490],
+          [-121.6940, 38.7550],
+          [-121.6940, 38.7590]
+        ]
+      }
+    }
+  ]
+}
