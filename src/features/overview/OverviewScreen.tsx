@@ -129,11 +129,46 @@ export const OverviewScreen: React.FC = () => {
   }
 
   if (metricsError) {
+    const err = metricsError as any;
+    const isNotConfigured = err?.code === 'BACKEND_NOT_CONFIGURED' || err?.code === 'NETWORK_OFFLINE';
+
+    if (isNotConfigured) {
+      return (
+        <div className="p-8 max-w-7xl mx-auto">
+          <div className="rounded-xl border border-yellow-500/40 bg-yellow-500/10 p-6 flex flex-col gap-3">
+            <div className="flex items-center gap-2 text-yellow-400 font-semibold text-sm">
+              <AlertTriangle className="w-4 h-4 shrink-0" />
+              Backend not connected
+            </div>
+            <p className="text-xs text-[#9EAAA5] leading-relaxed">
+              The CIRQ API backend is not reachable from this deployment. To connect it:
+            </p>
+            <ol className="text-xs text-[#9EAAA5] list-decimal list-inside space-y-1">
+              <li>Deploy the Python FastAPI backend (see <code className="text-yellow-300">docs/MANUAL_STEPS.md</code>)</li>
+              <li>In <strong className="text-white">Netlify → Site settings → Environment variables</strong>, add <code className="text-yellow-300">BACKEND_API_URL</code> pointing to your backend URL (e.g. <code className="text-yellow-300">https://cirq-api.onrender.com</code>)</li>
+              <li>Trigger a redeploy — the proxy rule in <code className="text-yellow-300">netlify.toml</code> will forward <code className="text-yellow-300">/api/*</code> to your backend automatically</li>
+            </ol>
+            {err?.message && (
+              <p className="text-[10px] font-mono text-yellow-600 border-t border-yellow-500/20 pt-2 mt-1">
+                {err.message}
+              </p>
+            )}
+            <button
+              onClick={() => refetchMetrics()}
+              className="self-start text-xs px-3 py-1.5 rounded bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 transition-colors mt-1"
+            >
+              Retry connection
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="p-8 max-w-7xl mx-auto">
         <ErrorState
           title="Failed to initialize CIRQ command centre"
-          message={(metricsError as any).message || 'Unable to retrieve API telemetry metrics'}
+          message={err?.message || 'Unable to retrieve API telemetry metrics'}
           onRetry={refetchMetrics}
         />
       </div>

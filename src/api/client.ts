@@ -96,6 +96,18 @@ export async function request<T>(endpoint: string, options: RequestInit = {}): P
       return {} as T;
     }
 
+    // Guard: if the server returned HTML instead of JSON (e.g. Netlify 404 page when
+    // BACKEND_API_URL is not set), surface a clear BACKEND_NOT_CONFIGURED error instead
+    // of an opaque "Unexpected token '<'" JSON parse crash.
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      throw new ApiError(response.status || 502, {
+        code: 'BACKEND_NOT_CONFIGURED',
+        message: 'Backend is not reachable. Set BACKEND_API_URL in your Netlify environment variables and redeploy.',
+        requestId: responseRequestId
+      });
+    }
+
     return await response.json();
   } catch (error) {
     if (error instanceof ApiError) {
