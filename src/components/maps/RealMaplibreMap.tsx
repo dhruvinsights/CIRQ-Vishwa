@@ -131,7 +131,7 @@ export const RealMaplibreMap: React.FC<RealMaplibreMapProps> = ({
   };
 
   // CARTO key configuration (watermark-free raster basemaps)
-  const cartoKey = (import.meta.env.VITE_CARTO_API_KEY as string) || 'cb1_4dig_1_15be51a493481a952ce6d256';
+  const cartoKey = (import.meta.env.VITE_CARTO_API_KEY as string) || '';
   const cartoKeyParam = cartoKey ? `?key=${cartoKey}` : '';
 
   // Base map style definitions
