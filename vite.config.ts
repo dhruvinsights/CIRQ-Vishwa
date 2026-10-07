@@ -1,6 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 import { defineConfig } from 'vite';
 
 // Dev: Vite on :5173 proxies API + SDK routes to the Python backend on :8100.
@@ -9,7 +8,7 @@ const backend = process.env.BACKEND_URL || 'http://127.0.0.1:8100';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  resolve: { alias: { '@': path.resolve(__dirname, '.') } },
+  resolve: { alias: { '@': import.meta.dirname } },
   server: {
     port: 5173,
     proxy: {
