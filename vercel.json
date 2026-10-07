@@ -1,0 +1,35 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "app": {
+      "root": ".",
+      "framework": "vite"
+    },
+    "backend": {
+      "root": ".",
+      "framework": "fastapi",
+      "entrypoint": "backend/app/main.py",
+      "bindings": [
+        {
+          "type": "service",
+          "service": "legacy",
+          "format": "url",
+          "env": "LEGACY_ENGINE_URL"
+        }
+      ]
+    },
+    "legacy": {
+      "root": ".",
+      "buildCommand": "npm install",
+      "entrypoint": "server/legacy.ts"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": { "service": "backend" } },
+    { "source": "/auth/(.*)", "destination": { "service": "backend" } },
+    { "source": "/_sdk/(.*)", "destination": { "service": "backend" } },
+    { "source": "/healthz", "destination": { "service": "backend" } },
+    { "source": "/readyz", "destination": { "service": "backend" } },
+    { "source": "/(.*)", "destination": { "service": "app" } }
+  ]
+}

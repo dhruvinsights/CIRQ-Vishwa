@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     auth_mode: Literal["dev", "appext"] = "dev"
     manifest_path: str = "extension.toml"
     static_dir: str = "dist"
-    legacy_engine_url: str = "http://127.0.0.1:3001"   # Express domain engine (strangler-fig, see docs/TODO.md)
+    legacy_engine_url: str = ""   # injected as LEGACY_ENGINE_URL by Vercel binding; set manually in other envs
 
     # --- digital farm API (AgriFoodData) ---
     # In appext mode the base URL comes from APPEXT_SERVICE_FARM_URL (set by the auth bundle).

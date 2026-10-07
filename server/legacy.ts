@@ -10,4 +10,5 @@ app.use(express.json({ limit: '2mb' }));
 app.use('/api/v1', apiRouter);
 
 const PORT = Number(process.env.LEGACY_PORT) || 3001;
-app.listen(PORT, '127.0.0.1', () => console.log(`[CIRQ legacy engine] http://127.0.0.1:${PORT}`));
+const HOST = process.env.LEGACY_HOST || '0.0.0.0';
+app.listen(PORT, HOST, () => console.log(`[CIRQ legacy engine] http://${HOST}:${PORT}`));
