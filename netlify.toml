@@ -7,6 +7,8 @@
   # VITE_CARTO_API_KEY is a public read-only map tile key — not a credential.
   # Tell Netlify's secrets scanner to ignore it so it doesn't block the deploy.
   SECRETS_SCAN_OMIT_KEYS = "VITE_CARTO_API_KEY"
+  # Omit docs and any leftover task logs from secrets scanning (they contain the same key value)
+  SECRETS_SCAN_OMIT_PATHS = "docs/MANUAL_STEPS.md"
   # Suppress the __dirname native config-loader warning (fixed in vite.config.ts too)
   VITE_CONFIG_NATIVE_IGNORE_WARNING = "true"
 

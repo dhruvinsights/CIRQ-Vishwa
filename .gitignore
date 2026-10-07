@@ -11,3 +11,6 @@ appext.toml
 __pycache__/
 *.pyc
 .venv/
+
+# Bob AI task logs — contain conversation history and may include env values
+bob-task-*.json
