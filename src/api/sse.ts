@@ -35,13 +35,17 @@ export function subscribeToEvents<T = any>(
       }
     };
 
+    let retries = 0;
     eventSource.onerror = (err) => {
       options.onError?.(err);
       if (eventSource) {
         eventSource.close();
       }
-      if (!isClosed) {
-        setTimeout(connect, options.reconnectIntervalMs || 5000);
+      retries++;
+      // Back off exponentially; stop retrying after 4 failures (likely no SSE backend)
+      if (!isClosed && retries <= 4) {
+        const delay = Math.min((options.reconnectIntervalMs || 5000) * retries, 30000);
+        setTimeout(connect, delay);
       }
     };
   }
