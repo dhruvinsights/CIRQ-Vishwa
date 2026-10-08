@@ -19,6 +19,7 @@ import { impactClient } from '../../api/clients/impact.ts';
 import { loopClient } from '../../api/clients/loop.ts';
 import { aiClient } from '../../api/clients/ai.ts';
 import { Card } from '../../components/ui/Card.tsx';
+import { DemoBanner } from '../../components/ui/DemoBanner.tsx';
 import { Badge } from '../../components/ui/Badge.tsx';
 import { ConfidenceMeter } from '../../components/ui/ConfidenceMeter.tsx';
 import { usePreferencesStore } from '../../stores/preferencesStore.ts';
@@ -178,6 +179,12 @@ export const DemoScreen: React.FC = () => {
   };
 
   return (
+    <div className="space-y-0">
+      <DemoBanner
+        screen="Circularity Demo"
+        reason="The 9-step flow calls real API endpoints but summary text is hardcoded — not derived from step results."
+        docsHint="Each step result will drive the summary once the Express engine is replaced by the Python backend."
+      />
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-[#26302C]/60">
@@ -319,6 +326,7 @@ export const DemoScreen: React.FC = () => {
           );
         })}
       </div>
+    </div>
     </div>
   );
 };

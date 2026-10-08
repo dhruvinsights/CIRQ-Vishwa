@@ -7,6 +7,20 @@
   VITE_CONFIG_NATIVE_IGNORE_WARNING = "true"
   SECRETS_SCAN_ENABLED            = "false"
 
+# Proxy /api/* → backend (set BACKEND_API_URL in Netlify env vars to your deployed backend)
+# If BACKEND_API_URL is not set this rule is a no-op and the SPA shows its offline banner.
+[[redirects]]
+  from   = "/api/*"
+  to     = ":BACKEND_API_URL/api/:splat"
+  status = 200
+  force  = true
+
+[[redirects]]
+  from   = "/healthz"
+  to     = ":BACKEND_API_URL/healthz"
+  status = 200
+  force  = true
+
 # SPA fallback: all routes handled by index.html
 [[redirects]]
   from   = "/*"

@@ -27,7 +27,7 @@ export const IntegrationsScreen: React.FC = () => {
   const testMutation = useMutation({
     mutationFn: (id: string) => integrationClient.testIntegration(id),
     onSuccess: (data) => {
-      setTestNotice(`Connection ping succeeded! Latency: ${data.latencyMs}ms (200 OK)`);
+      setTestNotice(`Connection ping succeeded! Latency: ${data.latencyMs ?? '?'}ms (200 OK)`);
       setTimeout(() => setTestNotice(null), 4000);
     }
   });
@@ -36,7 +36,7 @@ export const IntegrationsScreen: React.FC = () => {
     mutationFn: (id: string) => integrationClient.syncIntegration(id),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['integrations'] });
-      setTestNotice(`Sync completed! Consumed ${data.newRecords} new observation records.`);
+      setTestNotice(`Sync triggered. ${data.newRecords != null ? data.newRecords + ' new records received.' : 'Record count not available — check integration logs.'}`);
       setTimeout(() => setTestNotice(null), 4000);
     }
   });
@@ -57,8 +57,8 @@ export const IntegrationsScreen: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <Badge status="LIVE" />
-          <span className="text-xs font-mono text-[#68756F]">Active Connectors: {integrations.length}</span>
+          <Badge status={integrations.length > 0 ? 'LIVE' : 'STALE'} />
+          <span className="text-xs font-mono text-[#68756F]">Connectors: {integrations.length} — status reported at last sync</span>
         </div>
       </div>
 
@@ -138,6 +138,9 @@ export const IntegrationsScreen: React.FC = () => {
                 <div>Endpoint: <code className="text-[#9EAAA5]">{item.endpoint}</code></div>
                 <div>Last Synchronized: {new Date(item.lastSync).toLocaleString()}</div>
               </div>
+              <p className="text-[10px] text-[#68756F] italic border-t border-[#26302C]/40 pt-2">
+                Status shown was reported by the external service at last sync. If no sync has occurred, status may be stale.
+              </p>
             </div>
           ))}
         </div>

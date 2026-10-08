@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Settings, Shield, Sliders, Globe, DollarSign, Cpu, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
+import { Settings, Shield, Sliders, Globe, DollarSign, Cpu, CheckCircle2, AlertCircle, RefreshCw, Database } from 'lucide-react';
 import { usePreferencesStore, UnitSystem, CurrencyCode, UserRole } from '../../stores/preferencesStore.ts';
 import { Card } from '../../components/ui/Card.tsx';
 import { Badge } from '../../components/ui/Badge.tsx';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { request } from '../../api/client.ts';
+
+interface VectorStoreResponse {
+  vectorStore: 'chroma' | 'db2';
+  chromaPersistDir: string | null;
+  db2Configured: boolean;
+  status: string;
+  chunksIndexed: number | null;
+  availableBackends: string[];
+}
 
 interface LLMSettingsResponse {
   llmProvider: 'ollama' | 'gemini' | 'watsonx';
@@ -56,7 +65,26 @@ export const SettingsScreen: React.FC = () => {
 
   const queryClient = useQueryClient();
   const [savedNotice, setSavedNotice] = useState(false);
-  
+  const [vsSwitchNotice, setVsSwitchNotice] = useState<string | null>(null);
+  const [selectedVsBackend, setSelectedVsBackend] = useState<'chroma' | 'db2'>('chroma');
+
+  // Vector store query
+  const { data: vsData, isLoading: vsLoading, refetch: vsRefetch } = useQuery<VectorStoreResponse>({
+    queryKey: ['settings-vector-store'],
+    queryFn: () => request<VectorStoreResponse>('/settings/vector-store'),
+    onSuccess: (d: VectorStoreResponse) => setSelectedVsBackend(d.vectorStore),
+  } as any);
+
+  const switchVsMutation = useMutation({
+    mutationFn: (backend: string) => request('/settings/vector-store', { method: 'POST', body: JSON.stringify({ vectorStore: backend }) }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['settings-vector-store'] });
+      queryClient.invalidateQueries({ queryKey: ['health'] });
+      setVsSwitchNotice(`Switched to ${selectedVsBackend.toUpperCase()}. Run POST /api/v1/knowledge/ingest to populate the new store.`);
+      setTimeout(() => setVsSwitchNotice(null), 6000);
+    },
+  });
+
   // LLM Config state
   const [provider, setProvider] = useState<'ollama' | 'gemini' | 'watsonx'>('ollama');
   const [ollamaBaseUrl, setOllamaBaseUrl] = useState('http://localhost:11434');
@@ -151,6 +179,11 @@ export const SettingsScreen: React.FC = () => {
       {savedNotice && (
         <div className="p-3 bg-[#151A18] border border-[#8BCF45]/40 text-xs text-[#8BCF45] rounded-xs">
           Settings updated successfully.
+        </div>
+      )}
+      {vsSwitchNotice && (
+        <div className="p-3 bg-[#151A18] border border-[#6DA8C8]/40 text-xs text-[#6DA8C8] rounded-xs">
+          {vsSwitchNotice}
         </div>
       )}
 
@@ -356,6 +389,69 @@ export const SettingsScreen: React.FC = () => {
               </button>
             </div>
           </form>
+        </Card>
+
+        {/* Vector Store Backend */}
+        <Card
+          title="Vector Store Backend"
+          subtitle="ChromaDB runs locally (no server needed). Switch to Db2 when you have a Db2 12.1.2+ instance."
+          headerAction={<Badge status={vsData?.status === 'OK' ? 'LIVE' : 'STALE'} />}
+        >
+          <div className="space-y-4 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {(['chroma', 'db2'] as const).map((b) => (
+                <button
+                  key={b}
+                  type="button"
+                  onClick={() => setSelectedVsBackend(b)}
+                  className={`p-3 text-left border rounded-xs transition-colors ${
+                    selectedVsBackend === b
+                      ? 'border-[#8BCF45] bg-[#8BCF45]/10 text-[#E5ECE8]'
+                      : 'border-[#26302C] bg-[#151A18] text-[#9EAAA5] hover:border-[#384640]'
+                  }`}
+                >
+                  <div className="font-semibold text-white flex items-center justify-between">
+                    <span>{b === 'chroma' ? 'ChromaDB (Local)' : 'Db2 12.1.2+'}</span>
+                    {b === 'chroma' && <span className="text-[10px] bg-[#8BCF45]/20 text-[#8BCF45] px-1.5 py-0.5 rounded">Default</span>}
+                    {b === 'db2' && vsData?.db2Configured && <span className="text-[10px] bg-[#6DA8C8]/20 text-[#6DA8C8] px-1.5 py-0.5 rounded">Configured</span>}
+                  </div>
+                  <p className="text-[11px] text-[#9EAAA5] mt-1">
+                    {b === 'chroma' ? 'No server required. Persists to .chroma/ folder.' : 'Enterprise vector search. Needs DB2_HOST, DB2_USERNAME, DB2_PASSWORD.'}
+                  </p>
+                </button>
+              ))}
+            </div>
+            {selectedVsBackend === 'db2' && !vsData?.db2Configured && (
+              <div className="p-2.5 rounded-xs border border-yellow-500/40 bg-yellow-500/8 text-[11px] text-yellow-300">
+                ⚠ Db2 credentials not configured. Set DB2_DATABASE, DB2_HOST, DB2_USERNAME, DB2_PASSWORD in your .env file first.
+              </div>
+            )}
+            <div className="flex items-center justify-between text-[11px] text-[#9EAAA5]">
+              <span>
+                <Database className="w-3.5 h-3.5 inline mr-1 text-[#8BCF45]" />
+                {vsData ? `${vsData.chunksIndexed ?? 0} chunks indexed` : 'Loading…'}
+                {vsData?.chromaPersistDir && <span className="font-mono text-[#68756F] ml-2">({vsData.chromaPersistDir})</span>}
+              </span>
+              <span className={`font-mono ${vsData?.status === 'OK' ? 'text-[#8BCF45]' : 'text-[#D6D75A]'}`}>{vsData?.status ?? '—'}</span>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => vsRefetch()}
+                className="px-3 py-1.5 bg-[#181D1B] border border-[#26302C] text-[#9EAAA5] rounded-xs text-[11px] hover:text-white"
+              >
+                Refresh Status
+              </button>
+              <button
+                type="button"
+                onClick={() => switchVsMutation.mutate(selectedVsBackend)}
+                disabled={switchVsMutation.isPending || selectedVsBackend === vsData?.vectorStore}
+                className="px-3 py-1.5 bg-[#8BCF45] hover:bg-[#9ED957] text-[#0B0D0D] font-semibold rounded-xs text-[11px] disabled:opacity-50"
+              >
+                {switchVsMutation.isPending ? 'Switching…' : selectedVsBackend === vsData?.vectorStore ? 'Already Active' : `Switch to ${selectedVsBackend.toUpperCase()}`}
+              </button>
+            </div>
+          </div>
         </Card>
 
         {/* Localization & Measurement System */}

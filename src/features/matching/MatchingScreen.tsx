@@ -15,6 +15,7 @@ import { matchingClient } from '../../api/clients/matching.ts';
 import { processorClient } from '../../api/clients/processor.ts';
 import { resourceClient } from '../../api/clients/resource.ts';
 import { Card } from '../../components/ui/Card.tsx';
+import { DemoBanner } from '../../components/ui/DemoBanner.tsx';
 import { Badge } from '../../components/ui/Badge.tsx';
 import { ConfidenceMeter } from '../../components/ui/ConfidenceMeter.tsx';
 import { Skeleton, ErrorState } from '../../components/ui/States.tsx';
@@ -53,6 +54,12 @@ export const MatchingScreen: React.FC = () => {
   const matches = processorMatches?.matches || [];
 
   return (
+    <>
+      <DemoBanner
+        screen="Matching Engine"
+        reason="Match scores are pre-computed seed values, not live facility-to-feedstock calculations."
+        docsHint="The matching algorithm will be ported to the Python backend in a future sprint."
+      />
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-[#26302C]/60">
@@ -185,5 +192,6 @@ export const MatchingScreen: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

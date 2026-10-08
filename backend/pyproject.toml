@@ -19,6 +19,8 @@ dependencies = [
   "langchain-core>=0.3",
   "langchain-text-splitters>=0.3",
   "langchain-db2",              # DB2VS vector store (needs Db2 >= 12.1.2)
+  "langchain-chroma>=0.2",      # ChromaDB vector store (local default)
+  "chromadb>=0.5",
   "langchain-google-genai",     # Google Gemini provider
   "langchain-ollama>=1.0.0",    # Ollama provider for local / on-prem models
   "pypdf>=5.0",

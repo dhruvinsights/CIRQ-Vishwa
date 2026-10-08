@@ -1,15 +1,15 @@
 import time
 from datetime import datetime, timezone
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from ..auth import user_dep  # noqa: F401  (kept for symmetry; health endpoints are public)
+from ..auth import user_dep  # noqa: F401
 from ..config import get_settings
 from ..rag import store
 
 _STARTED = time.time()
-public = APIRouter()   # mounted OUTSIDE the session-protected router
-router = APIRouter()   # mounted INSIDE (needs a session)
+public = APIRouter()
+router = APIRouter()
 
 
 @public.get("/healthz")
@@ -20,8 +20,16 @@ async def healthz():
 @public.get("/readyz")
 async def readyz():
     s = get_settings()
-    return {"status": "ready", "checks": {"db2": s.db2_configured, "llm": s.llm_configured,
-                                         "farmApi": bool(s.farm_api_base_url)}}
+    return {
+        "status": "ready",
+        "checks": {
+            "vectorStore": s.vector_store,
+            "vectorStoreConfigured": s.vector_store_configured,
+            "db2": s.db2_configured,
+            "llm": s.llm_configured,
+            "farmApi": bool(s.farm_api_base_url),
+        },
+    }
 
 
 @router.get("/health")
@@ -37,11 +45,24 @@ async def live():
 @router.get("/health/ready")
 async def ready():
     s = get_settings()
-    chunks = await store.count() if s.db2_configured and s.llm_configured else None
+
+    # Probe vector store chunk count
+    chunks = None
+    vector_store_status = "NOT_CONFIGURED"
+    if s.llm_configured and s.vector_store_configured:
+        try:
+            chunks = await store.count()
+            vector_store_status = f"{s.vector_store.upper()}:OK"
+        except Exception as exc:  # noqa: BLE001
+            vector_store_status = f"{s.vector_store.upper()}:ERROR:{type(exc).__name__}"
+
     checks = {
-        "db2": "CONFIGURED" if s.db2_configured else "NOT_CONFIGURED",
+        "vectorStore": vector_store_status,
+        "vectorStoreBackend": s.vector_store,
         "llm": f"{s.llm_provider}:CONFIGURED" if s.llm_configured else "NOT_CONFIGURED",
         "farmApi": "CONFIGURED" if s.farm_api_base_url else "NOT_CONFIGURED",
         "ragChunks": str(chunks) if chunks is not None else "UNKNOWN",
+        "uptimeSeconds": int(time.time() - _STARTED),
     }
-    return {"status": "UP", "checks": checks}
+    overall = "UP" if "ERROR" not in vector_store_status else "DEGRADED"
+    return {"status": overall, "checks": checks}

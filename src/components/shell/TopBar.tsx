@@ -3,11 +3,9 @@ import { NavLink } from 'react-router-dom';
 import { Search, Sparkles } from 'lucide-react';
 import { BrandLogo } from '../ui/BrandLogo.tsx';
 import { useSelectionStore } from '../../stores/selectionStore.ts';
-import { usePreferencesStore, UserRole } from '../../stores/preferencesStore.ts';
 
 export const TopBar: React.FC = () => {
   const { setCommandPaletteOpen } = useSelectionStore();
-  const { role, setRole } = usePreferencesStore();
 
   return (
     <header className="h-14 bg-[#121317] border-b border-[#262B35] flex items-center justify-between px-6 shrink-0 z-30">
@@ -84,21 +82,6 @@ export const TopBar: React.FC = () => {
           <span className="hidden sm:inline">Search Sector...</span>
           <kbd className="hidden sm:inline text-[10px] font-mono text-[#68756F]">⌘K</kbd>
         </button>
-
-        {/* Role Selector */}
-        <select
-          value={role}
-          onChange={(e) => setRole(e.target.value as UserRole)}
-          className="bg-[#181A20] border border-[#262B35] text-[11px] font-mono text-[#9EAAA5] px-2.5 py-1.5 rounded-md focus:outline-hidden"
-          title="Select Workspace Role"
-        >
-          <option value="enterprise">Role: Enterprise</option>
-          <option value="farmer">Role: Farm Manager</option>
-          <option value="processor">Role: Bio-Processor</option>
-          <option value="researcher">Role: Agronomist</option>
-          <option value="government">Role: Policy</option>
-          <option value="admin">Role: Admin</option>
-        </select>
 
         {/* Launch Demo CTA in signature #E0FF20 lime */}
         <NavLink

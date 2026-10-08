@@ -15,6 +15,7 @@ import { simulationClient } from '../../api/clients/simulation.ts';
 import { resourceClient } from '../../api/clients/resource.ts';
 import { processorClient } from '../../api/clients/processor.ts';
 import { Card } from '../../components/ui/Card.tsx';
+import { DemoBanner } from '../../components/ui/DemoBanner.tsx';
 import { Badge } from '../../components/ui/Badge.tsx';
 import { SankeyFlow } from '../../components/charts/SankeyFlow.tsx';
 import { ConfidenceMeter } from '../../components/ui/ConfidenceMeter.tsx';
@@ -69,6 +70,12 @@ export const SimulatorScreen: React.FC = () => {
   };
 
   return (
+    <>
+      <DemoBanner
+        screen="Bio-Simulator"
+        reason="Uses hardcoded yield coefficients — no real thermodynamic simulation backend is connected."
+        docsHint="Connect a real bio-simulation model or replace with measured experimental data."
+      />
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-[#26302C]/60">
@@ -230,5 +237,6 @@ export const SimulatorScreen: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { scenarioClient } from '../../api/clients/scenario.ts';
 import { Card } from '../../components/ui/Card.tsx';
+import { DemoBanner } from '../../components/ui/DemoBanner.tsx';
 import { Badge } from '../../components/ui/Badge.tsx';
 import { KeyValue } from '../../components/ui/KeyValue.tsx';
 import { Skeleton, ErrorState } from '../../components/ui/States.tsx';
@@ -62,6 +63,12 @@ export const ScenarioLabScreen: React.FC = () => {
   const simulatedNet = simulatedGross - simulatedTransport;
 
   return (
+    <>
+      <DemoBanner
+        screen="Scenario Lab"
+        reason="Scenarios run on simulated projections — not on real historical farm data."
+        docsHint="Connect farm API data and real LCA factors to run evidence-based scenarios."
+      />
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-[#26302C]/60">
@@ -212,5 +219,6 @@ export const ScenarioLabScreen: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

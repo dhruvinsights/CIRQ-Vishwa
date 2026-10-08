@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { logisticsClient } from '../../api/clients/logistics.ts';
 import { Card } from '../../components/ui/Card.tsx';
+import { DemoBanner } from '../../components/ui/DemoBanner.tsx';
 import { Badge } from '../../components/ui/Badge.tsx';
 import { KeyValue } from '../../components/ui/KeyValue.tsx';
 import { Skeleton, ErrorState } from '../../components/ui/States.tsx';
@@ -38,6 +39,12 @@ export const LogisticsScreen: React.FC = () => {
   });
 
   return (
+    <>
+      <DemoBanner
+        screen="Freight Logistics"
+        reason="Route costs and emissions factors are estimated from seed data, not live freight APIs."
+        docsHint="Wire to a real routing engine (OSRM, Google Routes API) for live cost calculations."
+      />
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-[#26302C]/60">
@@ -148,5 +155,6 @@ export const LogisticsScreen: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

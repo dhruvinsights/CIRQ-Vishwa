@@ -10,6 +10,7 @@ from ..auth import user_dep
 from ..config import get_settings
 from ..errors import ApiError
 from ..llm import get_chat_model, get_embeddings
+from ..rag.store import backend_type
 
 router = APIRouter(prefix="/settings")
 
@@ -127,3 +128,46 @@ async def test_ollama_connection(body: dict | None = None, _=Depends(user_dep)):
             "url": url,
             "message": f"Could not reach Ollama at {url}: {exc.__class__.__name__}",
         }
+
+
+@router.get("/vector-store")
+async def get_vector_store(_=Depends(user_dep)):
+    """Return current vector store backend and its status."""
+    s = get_settings()
+    chunks = None
+    status = "NOT_CONFIGURED"
+    if s.llm_configured and s.vector_store_configured:
+        try:
+            from ..rag import store as rag_store
+            chunks = await rag_store.count()
+            status = "OK"
+        except Exception as exc:  # noqa: BLE001
+            status = f"ERROR: {type(exc).__name__}"
+    return {
+        "vectorStore": s.vector_store,
+        "chromaPersistDir": s.chroma_persist_dir if s.vector_store == "chroma" else None,
+        "db2Configured": s.db2_configured,
+        "status": status,
+        "chunksIndexed": chunks,
+        "availableBackends": ["chroma", "db2"],
+    }
+
+
+@router.post("/vector-store")
+async def set_vector_store(body: dict, user=Depends(user_dep)):
+    """Switch vector store backend at runtime. Requires re-ingest after switching."""
+    backend = str(body.get("vectorStore", "")).lower()
+    if backend not in ("chroma", "db2"):
+        raise ApiError(422, "VALIDATION", "vectorStore must be 'chroma' or 'db2'")
+    s = get_settings()
+    if backend == "db2" and not s.db2_configured:
+        raise ApiError(503, "NOT_CONFIGURED",
+                       "Db2 credentials not set. Configure DB2_DATABASE, DB2_HOST, DB2_USERNAME, DB2_PASSWORD first.")
+    s.vector_store = backend  # type: ignore[assignment]
+    # Clear LRU caches so next call picks up the new backend
+    from ..rag.store import _store
+    _store.cache_clear()
+    from ..llm import get_embeddings, get_chat_model
+    get_embeddings.cache_clear()
+    get_chat_model.cache_clear()
+    return {"vectorStore": backend, "message": f"Switched to {backend.upper()}. Re-run /knowledge/ingest to populate the new store."}

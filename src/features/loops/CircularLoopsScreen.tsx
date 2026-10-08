@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { loopClient } from '../../api/clients/loop.ts';
 import { Card } from '../../components/ui/Card.tsx';
+import { DemoBanner } from '../../components/ui/DemoBanner.tsx';
 import { Badge } from '../../components/ui/Badge.tsx';
 import { Drawer } from '../../components/ui/Drawer.tsx';
 import { KeyValue } from '../../components/ui/KeyValue.tsx';
@@ -40,6 +41,12 @@ export const CircularLoopsScreen: React.FC = () => {
   const inspected = loops.find(l => l.id === inspectLoopId);
 
   return (
+    <>
+      <DemoBanner
+        screen="Circular Loops"
+        reason="Loop closure percentages and circular economy metrics are seed-data estimates."
+        docsHint="Real loop validation requires actual feedstock tracking and processor output records."
+      />
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-[#26302C]/60">
@@ -160,5 +167,6 @@ export const CircularLoopsScreen: React.FC = () => {
         )}
       </Drawer>
     </div>
+    </>
   );
 };

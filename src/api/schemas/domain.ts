@@ -197,16 +197,17 @@ export const ScenarioSchema = z.object({
 export const KnowledgeArticleSchema = z.object({
   id: z.string(),
   title: z.string(),
-  source: z.string(),
-  publicationDate: z.string(),
-  resource: z.string(),
-  process: z.string(),
-  conditions: z.string(),
-  output: z.string(),
-  geography: z.string(),
-  citation: z.string(),
+  source: z.string().default(''),
+  publicationDate: z.string().default(''),
+  resource: z.string().default(''),
+  process: z.string().default(''),
+  conditions: z.string().default(''),
+  output: z.string().default(''),
+  geography: z.string().default(''),
+  citation: z.string().default(''),
   doi: z.string().optional(),
-  confidence: z.number().default(90)
+  confidence: z.number().default(0),
+  verified: z.boolean().default(false),
 });
 
 export type Resource = z.infer<typeof ResourceSchema>;

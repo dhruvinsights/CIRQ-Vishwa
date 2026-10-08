@@ -29,6 +29,11 @@ class Settings(BaseSettings):
     db2_password: str = ""
     db2_security: bool = False        # True for SSL (usually port 50001 / Db2 on Cloud)
     db2_rag_table: str = "CIRQ_KNOWLEDGE"
+
+    # --- vector store ---
+    vector_store: Literal["chroma", "db2"] = "chroma"   # chroma = local default, db2 = needs Db2 12.1.2+
+    chroma_persist_dir: str = ".chroma"
+
     rag_max_distance: float = 0.65    # cosine distance; ABOVE this a chunk is not used. Tune on real data.
     rag_top_k: int = 5
 
@@ -55,6 +60,12 @@ class Settings(BaseSettings):
     @property
     def db2_configured(self) -> bool:
         return all([self.db2_database, self.db2_host, self.db2_username, self.db2_password])
+
+    @property
+    def vector_store_configured(self) -> bool:
+        if self.vector_store == "db2":
+            return self.db2_configured
+        return True  # chroma always works locally
 
     @property
     def llm_configured(self) -> bool:
