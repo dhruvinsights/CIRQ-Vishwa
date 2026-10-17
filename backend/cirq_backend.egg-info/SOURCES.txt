@@ -5,3 +5,4 @@ cirq_backend.egg-info/dependency_links.txt
 cirq_backend.egg-info/requires.txt
 cirq_backend.egg-info/top_level.txt
 tests/test_api.py
+tests/test_domain.py

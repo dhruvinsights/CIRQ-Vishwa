@@ -6,7 +6,10 @@ pydantic-settings>=2.3
 langchain-core>=0.3
 langchain-text-splitters>=0.3
 langchain-db2
+langchain-chroma>=0.2
+chromadb>=0.5
 langchain-google-genai
+langchain-ollama>=1.0.0
 pypdf>=5.0
 
 [appext]

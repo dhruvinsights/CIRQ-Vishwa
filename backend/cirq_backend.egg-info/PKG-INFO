@@ -11,7 +11,10 @@ Requires-Dist: pydantic-settings>=2.3
 Requires-Dist: langchain-core>=0.3
 Requires-Dist: langchain-text-splitters>=0.3
 Requires-Dist: langchain-db2
+Requires-Dist: langchain-chroma>=0.2
+Requires-Dist: chromadb>=0.5
 Requires-Dist: langchain-google-genai
+Requires-Dist: langchain-ollama>=1.0.0
 Requires-Dist: pypdf>=5.0
 Provides-Extra: appext
 Requires-Dist: appext @ git+https://github.com/NaLamKI/Application-SDK.git ; extra == "appext"
